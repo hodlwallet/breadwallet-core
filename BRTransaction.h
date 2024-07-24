@@ -44,7 +44,8 @@ extern "C" {
 #define TX_UNCONFIRMED       INT32_MAX   // block height indicating transaction is unconfirmed
 #define TX_MAX_LOCK_HEIGHT   500000000   // a lockTime below this value is a block height, otherwise a timestamp
 
-#define TXIN_SEQUENCE        UINT32_MAX  // sequence number for a finalized tx input
+// #define TXIN_SEQUENCE        UINT32_MAX  // sequence number for a finalized tx input
+#define TXIN_SEQUENCE        (UINT32_MAX - 100)  // sequence number for a finalized tx input
 
 #define SATOSHIS             100000000LL
 #define MAX_MONEY            (21000000LL*SATOSHIS)

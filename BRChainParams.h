@@ -50,7 +50,7 @@ typedef struct {
 
 static const char *BRMainNetDNSSeeds[] = {
     "dnsseed.bluematt.me.", "seed.btc.petertodd.org.", "seed.bitcoin.jonasschnelli.ch.", "seed.bitcoinstats.com.",
-    "dnsseed.bitcoin.dashjr.org.", "seed.bitcoin.sipa.be.", NULL
+    "dnsseed.bitcoin.dashjr.org.", "seed.bitcoin.sipa.be.", "orange.merapi.io", NULL
 };
 
 static const char *BRTestNetDNSSeeds[] = {

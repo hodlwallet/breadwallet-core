@@ -85,6 +85,8 @@ size_t BRWalletUnusedAddrs(BRWallet *wallet, BRAddress addrs[], uint32_t gapLimi
 // returns the first unused external address (bech32 pay-to-witness-pubkey-hash)
 BRAddress BRWalletReceiveAddress(BRWallet *wallet);
 
+void BRWalletReceiveAddressString(BRWallet *wallet, char *charArray, size_t len);
+
 // returns the first unused external address (legacy pay-to-pubkey-hash)
 BRAddress BRWalletLegacyAddress(BRWallet *wallet);
 
@@ -131,6 +133,10 @@ BRTransaction *BRWalletCreateTransaction(BRWallet *wallet, uint64_t amount, cons
 // result must be freed using BRTransactionFree()
 BRTransaction *BRWalletCreateTxForOutputs(BRWallet *wallet, const BRTxOutput outputs[], size_t outCount);
 
+BRTransaction *BRWalletCreateTransactionReplaceByFee(BRWallet *wallet, uint64_t amount, const char *addr, const BRTransaction *txOriginal);
+
+BRTransaction *BRWalletCreateTxForOutputsReplaceByFee(BRWallet *wallet, const BRTxOutput outputs[], size_t outCount, const BRTransaction *txOriginal);
+
 // signs any inputs in tx that can be signed using private keys from the wallet
 // seed is the master private key (wallet seed) corresponding to the master public key given when the wallet was created
 // returns true if all inputs were signed, or false if there was an error or not all inputs were able to be signed
@@ -150,6 +156,9 @@ BRTransaction *BRWalletTransactionForHash(BRWallet *wallet, UInt256 txHash);
 
 // true if no previous wallet transaction spends any of the given transaction's inputs, and no inputs are invalid
 int BRWalletTransactionIsValid(BRWallet *wallet, const BRTransaction *tx);
+
+// true if transaction has been successfully replaced by fee
+int BRWalletTransactionIsReplacedByFee(BRWallet *wallet, const BRTransaction *tx);
 
 // true if transaction cannot be immediately spent (i.e. if it or an input tx can be replaced-by-fee)
 int BRWalletTransactionIsPending(BRWallet *wallet, const BRTransaction *tx);

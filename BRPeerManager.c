@@ -39,8 +39,10 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-#define PROTOCOL_TIMEOUT      20.0
-#define MAX_CONNECT_FAILURES  20 // notify user of network problems after this many connect failures in a row
+// #define PROTOCOL_TIMEOUT      20.0
+#define PROTOCOL_TIMEOUT      1000.0
+// #define MAX_CONNECT_FAILURES  20 // notify user of network problems after this many connect failures in a row
+#define MAX_CONNECT_FAILURES  100
 #define PEER_FLAG_SYNCED      0x01
 #define PEER_FLAG_NEEDSUPDATE 0x02
 
@@ -1357,7 +1359,7 @@ static BRTransaction *_peerRequestedTx(void *info, UInt256 txHash) {
 
     _BRTxPeerListAddPeer(&manager->txRelays, txHash, peer);
     if (pubTx.tx) BRWalletRegisterTransaction(manager->wallet, pubTx.tx);
-    if (pubTx.tx && ! BRWalletTransactionIsValid(manager->wallet, pubTx.tx)) error = EINVAL;
+    if (pubTx.tx && ! BRWalletTransactionIsValid(manager->wallet, pubTx.tx) && ! BRWalletTransactionIsReplacedByFee(manager->wallet, pubTx.tx)) error = EINVAL;
     pthread_mutex_unlock(&manager->lock);
     if (pubTx.callback) pubTx.callback(pubTx.info, error);
     return pubTx.tx;
